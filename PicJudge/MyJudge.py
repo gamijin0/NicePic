@@ -9,7 +9,7 @@ class MyPic:
     #download the image for judge
     def GetImg(self,Page_url):
 
-        picpath = '%s' % (Page_url[Page_url.find('http')+5:Page_url.find('com')+3]) # 下载到的本地目录
+        picpath = '%s' % (Page_url[Page_url.find('http')+7:Page_url.find('com')+3]) # 下载到的本地目录
         if not os.path.exists(picpath):  # 路径不存在时创建一个
             os.makedirs(picpath)
 
@@ -20,12 +20,13 @@ class MyPic:
         i=0
         for url in urls_list:
             i += 1
-            if(url[-3:]!='jpg' or url[:4]!='http'):
+            print(url)
+            if((url[-3:]!='jpg') or url[:4]!='http'):
                 print('Not a valid url.')
                 continue
             else:
                 #print(i)
-                filename = ".//"+picpath+"//"+str(i)+".jpg"
+                filename = ".//"+picpath+"//"+url[-17:-4]+"_"+str(i)+'.'+url[-3:]
                 print(filename)
                 img = requests.get(url)
                 with open(filename,mode='wb') as f:
@@ -39,7 +40,7 @@ class MyPic:
 
         try:
             self.driver.get(Page_url)
-            time.sleep(0.5)
+            time.sleep(1)
             html = self.driver.page_source
             #print(html)
 
@@ -49,7 +50,8 @@ class MyPic:
 
             for tag in img_list:
                 #print(tag['src'])
-                url_list.append(tag.attrs['src'])
+                #url_list.append(tag.attrs['src'])
+                url_list.append(tag.attrs['data-original'])
             return url_list
         except:
             return url_list
@@ -58,5 +60,8 @@ class MyPic:
         return None
 
 if __name__=="__main__":
-    one = MyPic()
-    one.GetImg("http://www.gifxiu.net/zhuanji/153/")
+    for i in range(2,30):
+        one = MyPic()
+        url = "http://www.mzitu.com/xinggan/page/"+str(i)
+        print(url)
+        one.GetImg(url)
