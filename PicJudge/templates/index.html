@@ -1,0 +1,46 @@
+
+<head>
+    <script src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://jq22.qiniudn.com/masonry-docs.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+var $container = $('#masonry');
+$container.imagesLoaded( function(){
+                    $container.masonry({
+itemSelector : '.box',
+gutterWidth : 20,
+isAnimated: true,
+});
+                    });
+                });
+
+    </script>
+    <style type="text/css">
+        .container-fluid {
+
+            padding: 50px;
+        }
+        .box {
+
+            margin: 20px;
+            float: left;
+            width: 220px;
+        }
+        .box img {
+
+            border-radius:20px;
+            max-width: 100%
+        }
+    </style>
+</head>
+
+<html>
+
+    <div id="masonry" class="container-fluid">
+        {% for i in IMG_list %}
+        <div class="box"><img src="/static/MyPic/{{i}}"></div>
+        {% endfor %}
+    </div>
+
+</html>
