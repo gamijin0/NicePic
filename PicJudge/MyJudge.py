@@ -44,7 +44,7 @@ class MyPic:
             html = self.driver.page_source
             #print(html)
 
-            bs = BS(html)
+            bs = BS(html )
             img_list = bs.find_all('img')
             url_list = list()
 
